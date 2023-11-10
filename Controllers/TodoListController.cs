@@ -29,10 +29,9 @@ namespace TODO.Controllers
             return Ok(await _todoService.GetAllTask());
         }
 
-        [HttpGet("GetTaskById{id}")]
-        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> GetTaskById(int id){           
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> GetTaskById(Guid id){           
             return Ok(await _todoService.GetTaskById(id));
-
         }
 
         [HttpPost("AddTask")]
@@ -47,7 +46,7 @@ namespace TODO.Controllers
         }
 
         [HttpDelete("DeleteTask")]
-        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> DeleteTask(int id){
+        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> DeleteTask(Guid id){
             return Ok(await _todoService.DeleteTask(id));
         }
     }

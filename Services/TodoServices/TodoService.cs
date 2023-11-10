@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TODO.Data;
 using TODO.Dtos.TodoLIst;
@@ -42,11 +43,19 @@ namespace TODO.Services.TodoServices
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetTodoListResponseDto>> GetTaskById(int id)
+        public async Task<ServiceResponse<GetTodoListResponseDto>> GetTaskById(Guid id)
         {
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
-            var todoLists = await _dataContext.TodoList.FirstOrDefaultAsync(c => c.Id == id);
-            serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);
+            try{
+                var todoLists = await _dataContext.TodoList.FirstOrDefaultAsync(c => c.Id == id);
+                if(todoLists is null){
+                    throw new Exception($"{id} NOT FOUND");
+                }
+                serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);                
+            }catch(Exception ex){
+                serviceResponse.Message = ex.Message;
+            }
+            
             return serviceResponse;
         }
 
@@ -65,7 +74,7 @@ namespace TODO.Services.TodoServices
             return serviceResponse;
         }
 
-        public async Task<ServiceResponse<GetTodoListResponseDto>> DeleteTask(int id){
+        public async Task<ServiceResponse<GetTodoListResponseDto>> DeleteTask(Guid id){
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
             var todoLists = await _dataContext.TodoList.FirstOrDefaultAsync(c => c.Id == id);
             if(todoLists is null)

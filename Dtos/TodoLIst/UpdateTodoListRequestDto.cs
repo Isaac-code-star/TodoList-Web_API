@@ -7,7 +7,7 @@ namespace TODO.Dtos.TodoLIst
 {
     public class UpdateTodoListRequestDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string? Title { get; set; }
         public DateTime DateTime { get; set; }
     }
