@@ -46,15 +46,8 @@ namespace TODO.Services.TodoServices
         public async Task<ServiceResponse<GetTodoListResponseDto>> GetTaskById(Guid id)
         {
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
-            try{
-                var todoLists = await _dataContext.TodoList.FirstOrDefaultAsync(c => c.Id == id);
-                if(todoLists is null){
-                    throw new Exception($"{id} NOT FOUND");
-                }
-                serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);                
-            }catch(Exception ex){
-                serviceResponse.Message = ex.Message;
-            }
+            var todoLists = await _dataContext.TodoList.FirstOrDefaultAsync(c => c.Id == id);
+            serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);                
             
             return serviceResponse;
         }

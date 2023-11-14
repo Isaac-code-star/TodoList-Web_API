@@ -30,8 +30,9 @@ namespace TODO.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> GetTaskById(Guid id){           
-            return Ok(await _todoService.GetTaskById(id));
+        public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> GetTaskById(Guid id){
+            var task = await _todoService.GetTaskById(id);              
+            return StatusCode(201, "ok");
         }
 
         [HttpPost("AddTask")]
