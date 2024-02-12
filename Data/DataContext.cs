@@ -11,7 +11,6 @@ namespace TODO.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
         }
 
         public DbSet<TodoList> TodoList { get; set; }
