@@ -13,6 +13,8 @@ namespace TODO.Models
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
         public string? Title { get; set; }
+        public string? Description { get; set; }
+        
         public DateTime DateTime { get; set; } = DateTime.UtcNow;
 
         
