@@ -13,6 +13,6 @@ namespace TODO.Data
         {
         }
 
-        public DbSet<TodoList> TodoList { get; set; }
+        public DbSet<TodoList> todolist { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace TODO.Controllers
         public async Task<ActionResult<ServiceResponse<GetTodoListResponseDto>>> GetTaskById(Guid id){
             var task = await _todoService.GetTaskById(id);              
             return StatusCode(201, "ok");
+            
         }
 
         [HttpPost("AddTask")]
