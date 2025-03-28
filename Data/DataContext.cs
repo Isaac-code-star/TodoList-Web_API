@@ -13,6 +13,6 @@ namespace TODO.Data
         {
         }
 
-        public DbSet<TodoList> todolist { get; set; }
+        public DbSet<TodoList> taskmanger { get; set; }
     }
 }

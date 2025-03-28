@@ -16,7 +16,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Postgres Resgistraion
-builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<DataContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//sqlserver registration
+builder.Services.AddDbContext<DataContext>(
+    opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 //Registering Services
 builder.Services.AddScoped<ITodoService, TodoService>();

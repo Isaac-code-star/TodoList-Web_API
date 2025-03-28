@@ -30,9 +30,9 @@ namespace TODO.Services.TodoServices
         {
             var serviceResponse = new ServiceResponse<List<GetTodoListResponseDto>>();
             var todolist = _mapper.Map<TodoList>(newtodoList);
-            await _dataContext.todolist.AddAsync(todolist);
+            await _dataContext.taskmanger.AddAsync(todolist);
             _dataContext.SaveChanges();
-            serviceResponse.Data = _dataContext.todolist.Select(c => _mapper.Map<GetTodoListResponseDto>(c)).ToList();
+            serviceResponse.Data = _dataContext.taskmanger.Select(c => _mapper.Map<GetTodoListResponseDto>(c)).ToList();
             return serviceResponse;
         }
 
@@ -40,7 +40,7 @@ namespace TODO.Services.TodoServices
         {
             var serviceResponse = new ServiceResponse<List<GetTodoListResponseDto>>
             {
-                Data = await _dataContext.todolist.Select(c => _mapper.Map<GetTodoListResponseDto>(c)).ToListAsync(),
+                Data = await _dataContext.taskmanger.Select(c => _mapper.Map<GetTodoListResponseDto>(c)).ToListAsync(),
                 Message = "Data's successful"
             };
             return serviceResponse;
@@ -51,7 +51,7 @@ namespace TODO.Services.TodoServices
             
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
             
-            var todoLists = await _dataContext.todolist.FirstOrDefaultAsync(c => c.Id == id);
+            var todoLists = await _dataContext.taskmanger.FirstOrDefaultAsync(c => c.Id == id);
             serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);                
             
             return serviceResponse;
@@ -60,7 +60,7 @@ namespace TODO.Services.TodoServices
         public async Task<ServiceResponse<GetTodoListResponseDto>> UpdateTask(UpdateTodoListRequestDto updateTodoList){
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
             
-            var todoLists = await _dataContext.todolist.FirstOrDefaultAsync(c => c.Id == updateTodoList.Id);
+            var todoLists = await _dataContext.taskmanger.FirstOrDefaultAsync(c => c.Id == updateTodoList.Id);
 
             if(todoLists is null){
                 throw new Exception($"TodoList with id {updateTodoList.Id} not found");
@@ -68,18 +68,18 @@ namespace TODO.Services.TodoServices
             }
             todoLists.Title = updateTodoList.Title;
             todoLists.DateTime = updateTodoList.DateTime;
-            _dataContext.todolist.Update(todoLists);
+            _dataContext.taskmanger.Update(todoLists);
             await _dataContext.SaveChangesAsync();
             serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);
             return serviceResponse;
         }
 
-
+        //Delete Function Task!
         public async Task<ServiceResponse<GetTodoListResponseDto>> DeleteTask(Guid id){
             var serviceResponse = new ServiceResponse<GetTodoListResponseDto>();
-            var todoLists = await _dataContext.todolist.FirstOrDefaultAsync(c => c.Id == id);
+            var todoLists = await _dataContext.taskmanger.FirstOrDefaultAsync(c => c.Id == id);
             if(todoLists is null)
-            _dataContext.todolist.Remove(todoLists!);
+            _dataContext.taskmanger.Remove(todoLists!);
             await _dataContext.SaveChangesAsync();
             serviceResponse.Data = _mapper.Map<GetTodoListResponseDto>(todoLists);
             return serviceResponse;
